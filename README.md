@@ -5,6 +5,8 @@ Hey!
 This is an app I've made to try out the Flutter framework.
 I haven't done anything for mobile devices before, so I thought I'd give it a shot.
 
+This repo only has the source code in it, not the Flutter project, so if you would want to run that yourself, you need to create a new Flutter project and copy my code into it.
+
 Only ever built for Android, since I don't own an Apple Device.
 
 The code is a modified version of a project I did for a one-day course on mobile apps.
