@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'otter.dart';
 import 'main.dart';
+import 'experience.dart';
 import 'otter_reader.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -36,9 +37,7 @@ class _OtterListState extends State<OtterList> {
     }
 
     final List _widgetOptions = [
-      Text(
-        'Index 0: Home',
-      ),
+      experience(),
       (otters == null ? buildWaitingWidget() : buildOtterWidget()),
       (Column(children: <Widget>[
         Padding(
@@ -133,13 +132,8 @@ class _OtterListState extends State<OtterList> {
                         ),
                       ],
                     ),
-                    decoration: const BoxDecoration(                      
-                      border: Border(                      
-                        top: BorderSide(width: 1.0, color: Colors.black),
-                        left: BorderSide(width: 1.0, color: Colors.black),
-                        right: BorderSide(width: 1.0, color: Colors.black),
-                        bottom: BorderSide(width: 1.0, color: Colors.black),
-                      ),
+                    decoration: BoxDecoration(                      
+                      border: Border.all(color: Colors.black)
                     ),
                   ),
                 ),
