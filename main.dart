@@ -26,8 +26,7 @@ class OtterPage extends StatelessWidget {
         children: [
           Image.network(otter.imageUrl),
           Text("Details", style: Theme.of(context).primaryTextTheme.headline6?.copyWith(color: Colors.black)),
-          Text(otter.detail, style: Theme.of(context).primaryTextTheme.subtitle1?.copyWith(color: Colors.black)),
-          
+          Text(otter.detail, style: Theme.of(context).primaryTextTheme.subtitle1?.copyWith(color: Colors.black)),          
         ],
       ),
     );
