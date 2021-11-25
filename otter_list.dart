@@ -13,7 +13,6 @@ class OtterList extends StatefulWidget {
 
 class _OtterListState extends State<OtterList> {
   List<Otter> otters;
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
   @override
   Future<void> initState() {
