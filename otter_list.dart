@@ -4,7 +4,6 @@ import 'otter.dart';
 import 'main.dart';
 import 'experience.dart';
 import 'otter_reader.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class OtterList extends StatefulWidget {
   @override
@@ -22,6 +21,7 @@ class _OtterListState extends State<OtterList> {
         this.otters = otters;
       });
     });
+    var data = getData();
   }
 
   int _selectedIndex = 1;
@@ -87,7 +87,7 @@ class _OtterListState extends State<OtterList> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blueAccent,
+        selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
       ),
     );
@@ -131,9 +131,8 @@ class _OtterListState extends State<OtterList> {
                         ),
                       ],
                     ),
-                    decoration: BoxDecoration(                      
-                      border: Border.all(color: Colors.black)
-                    ),
+                    decoration:
+                        BoxDecoration(border: Border.all(color: Colors.black)),
                   ),
                 ),
               );
@@ -168,5 +167,14 @@ class _OtterListState extends State<OtterList> {
   void toNextPage(Otter otter) {
     Navigator.push(
         context, MaterialPageRoute(builder: (_) => OtterPage(otter)));
+  }
+
+  void getData() async {
+    final res = await supabase.from('otters').select().execute();
+    var data = (res.toJson());
+    data.forEach((key, value) {
+      print(value);
+    });
+    final error = res.error;
   }
 }

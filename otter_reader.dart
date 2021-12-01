@@ -14,7 +14,6 @@ class OtterReader {
   }
 
   Otter parseOtter(properties) {
-    print(properties);
     String name = properties["name"];
     String common = properties["common"];
     String desc = properties["desc"];

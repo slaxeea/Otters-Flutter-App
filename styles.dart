@@ -4,7 +4,6 @@ import 'otter.dart';
 import 'styles.dart';
 import 'main.dart';
 import 'otter_reader.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 BoxDecoration boxdeco = BoxDecoration(
     color: Colors.transparent, border: Border.all(color: Colors.black));
