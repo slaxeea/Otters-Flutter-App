@@ -11,3 +11,5 @@ BoxDecoration boxdeco = BoxDecoration(
 TextStyle title = TextStyle(fontSize: 20);
 
 TextStyle text = TextStyle(fontSize: 15, color: Colors.black);
+
+TextStyle errorstyle = TextStyle(fontSize: 15, color: Colors.redAccent[700]);

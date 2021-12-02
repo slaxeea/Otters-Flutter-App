@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rezepte/otter_list.dart';
+import 'package:otter_library/otter_list.dart';
+import 'package:otter_library/NewExperience.dart';
 import 'ExperienceClass.dart';
+import 'ExperienceDetail.dart';
 import 'styles.dart';
 import 'main.dart';
 import 'NewExperience.dart';
@@ -31,8 +33,11 @@ class _experienceState extends State<experience> {
       final data = response.data;
       List<ExperienceClass> temp = [];
       for (var i = 0; i < response.data.length; i++) {
-        temp.add(new ExperienceClass(response.data[i]['title'],
-            response.data[i]['desc'], response.data[i]['id'].toString()));
+        temp.add(new ExperienceClass(
+            response.data[i]['title'],
+            response.data[i]['desc'],
+            response.data[i]['id'].toString(),
+            response.data[i]['imageUrl'].toString()));
       }
       setState(() {
         experienceList = temp;
@@ -67,31 +72,40 @@ class _experienceState extends State<experience> {
       return Container(
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Please Login to view your experiences",
-                style: TextStyle(fontSize: 20),
+                "Please",
+                style: title,
               ),
-              ElevatedButton(
-                  child: Text('Login'),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Login()),
-                    );
-                  }),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: ElevatedButton(
+                    child: Text('Login'),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Login()),
+                      );
+                    }),
+              ),
               Text(
                 "or",
-                style: TextStyle(fontSize: 20),
+                style: title,
               ),
-              ElevatedButton(
-                  child: Text('Signup'),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Signup()),
-                    );
-                  }),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: ElevatedButton(
+                    child: Text('Signup'),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Signup()),
+                      );
+                    }),
+              ),
+              Text("to view your experiences", style: title),
             ],
           ),
         ),
@@ -154,7 +168,7 @@ class _experienceState extends State<experience> {
                 tooltip: "New",
               ),
               alignment: Alignment.bottomRight,
-              padding: const EdgeInsets.only(right: 20),
+              padding: const EdgeInsets.only(right: 20, bottom: 20),
             ),
           ]));
     }

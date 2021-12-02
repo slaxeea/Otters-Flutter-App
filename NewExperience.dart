@@ -1,12 +1,11 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rezepte/experience.dart';
-import 'package:rezepte/otter_list.dart';
-import 'ExperienceClass.dart';
-import 'styles.dart';
 import 'main.dart';
 import 'auth.dart';
+import 'dart:math';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 
 class newExperience extends StatefulWidget {
   @override
@@ -14,18 +13,90 @@ class newExperience extends StatefulWidget {
 }
 
 class _newExperienceState extends State<newExperience> {
-  Future<PostgrestResponse> saveExperience(String title, String desc) async {
+  XFile imageFile;
+  String imagePath;
+  String title = "";
+  String desc = "";
+  String imageUrl = "";
+
+  Future<PostgrestResponse> saveExperience(
+      String title, String desc, String imageUrl) async {
     String id = supabase.auth.currentUser.id;
     final response = await supabase.from('experiences').insert([
-      {'userid': id, 'title': title, 'desc': desc}
+      {'userid': id, 'title': title, 'desc': desc, 'imageUrl': imageUrl}
     ]).execute();
     return response;
   }
 
-  String title = "";
-  String desc = "";
+
   @override
   Widget build(BuildContext context) {
+    Future imageSelector(BuildContext context, String pickerType) async {
+      ImagePicker img = new ImagePicker();
+      switch (pickerType) {
+        case "gallery":
+
+          /// GALLERY IMAGE PICKER
+          imageFile = (await img.pickImage(
+              source: ImageSource.gallery, imageQuality: 90));
+          break;
+
+        case "camera": // CAMERA CAPTURE CODE
+          imageFile = (await img.pickImage(
+              source: ImageSource.camera, imageQuality: 90));
+          break;
+      }
+
+      if (imageFile != null) {
+        print("You selected  image : " + imageFile.path);
+
+        final dynamic file = File(imageFile.path);
+        String rand = Random().nextInt(1000000).toString();
+        String path = getUserId() + "/" + rand;
+
+        final res = await supabase.storage.from('images').upload(path, file,
+            fileOptions: FileOptions(cacheControl: '3600', upsert: false));
+        
+        String pathInDb =
+            "https://eoshhzqqdhzcowuvurqc.supabase.in/storage/v1/object/public/images/" +
+                getUserId() +
+                "/" +
+                rand;
+                print("path: $pathInDb");
+        setState(() {
+          imageUrl = pathInDb;
+        });
+      } else {
+        print("You have not taken an image");
+      }
+    }
+
+    void _settingModalBottomSheet(context) {
+      showModalBottomSheet(
+          context: context,
+          builder: (BuildContext bc) {
+            return Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      title: new Text('Gallery'),
+                      onTap: () => {
+                            imageSelector(context, "gallery"),
+                            Navigator.pop(context),
+                          }),
+                  new ListTile(
+                    title: new Text('Camera'),
+                    onTap: () => {
+                      imageSelector(context, "camera"),
+                      Navigator.pop(context)
+                    },
+                  ),
+                ],
+              ),
+            );
+          });
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text("New Experience"),
@@ -42,7 +113,7 @@ class _newExperienceState extends State<newExperience> {
                       child: TextField(
                           onChanged: (String value) {
                             setState(() {
-                              desc = value.toString();
+                              title = value.toString();
                             });
                           },
                           decoration: InputDecoration(
@@ -55,7 +126,7 @@ class _newExperienceState extends State<newExperience> {
                       child: TextField(
                           onChanged: (String value) {
                             setState(() {
-                              title = value.toString();
+                              desc = value.toString();
                             });
                           },
                           decoration: InputDecoration(
@@ -63,10 +134,15 @@ class _newExperienceState extends State<newExperience> {
                             labelText: "Description",
                           )),
                     ),
+                    ElevatedButton(
+                        child: Text('Add Photo'),
+                        onPressed: () {
+                          _settingModalBottomSheet(context);
+                        }),
                     Container(
                       child: FloatingActionButton(
                         onPressed: () {
-                          saveExperience(title, desc)
+                          saveExperience(title, desc, imageUrl)
                               .then((value) => print(value.data));
                           Navigator.pop(context);
                         },
@@ -79,56 +155,6 @@ class _newExperienceState extends State<newExperience> {
                     ),
                   ],
                 ))
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ExperienceDetail extends StatelessWidget {
-  final ExperienceClass exp;
-  ExperienceDetail(this.exp);
-  Future<void> delete(ExperienceClass e) async {
-    final res = await supabase
-        .from('experiences')
-        .delete()
-        .match({'id': e.id.toString()}).execute();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    String title = exp.title;
-    String desc = exp.description;
-    return Scaffold(
-      appBar: AppBar(title: Text("Details")),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Text("Title $title",
-                style: Theme.of(context)
-                    .primaryTextTheme
-                    .headline6
-                    ?.copyWith(color: Colors.black)),
-            Text("Description $desc",
-                style: Theme.of(context)
-                    .primaryTextTheme
-                    .subtitle1
-                    ?.copyWith(color: Colors.black)),
-            Container(
-              child: FloatingActionButton(
-                onPressed: () {
-                  delete(exp);
-                  Navigator.pop(context);
-                },
-                child: const Icon(Icons.delete),
-                backgroundColor: Colors.lightBlue,
-                tooltip: "Delete",
-              ),
-              alignment: Alignment.bottomRight,
-              padding: const EdgeInsets.only(right: 20),
-            ),
           ],
         ),
       ),
