@@ -15,39 +15,51 @@ class experience extends StatefulWidget {
 }
 
 class _experienceState extends State<experience> {
-  bool isloggedin() {
-    return supabase.auth.currentUser != null;
-  }
-
   List<ExperienceClass> experienceList = [];
+  bool signedin = false;
+
   Future<PostgrestResponse> getExperiences() async {
-    String id = supabase.auth.currentUser.id;
-    print(id);
-    final response =
-        await supabase.from('experiences').select().eq('userid', id).execute();
-    final data = response.data;
-    final error = response.error;
-    return response;
+    if (signedin) {
+      experienceList.clear();
+      String id = supabase.auth.currentUser.id;
+      final response = await supabase
+          .from('experiences')
+          .select()
+          .eq('userid', id)
+          .execute();
+      final data = response.data;
+      List<ExperienceClass> temp = [];
+      for (var i = 0; i < response.data.length; i++) {
+        temp.add(new ExperienceClass(
+            response.data[i]['title'], response.data[i]['desc']));
+      }
+      setState(() {
+        experienceList = temp;
+      });
+      final error = response.error;
+      return response;
+    } else
+      return null;
   }
 
   @override
   void initState() {
     super.initState();
-    getExperiences().then((response) {
-      setState(() {
-        for (var i = 0; i < response.data.length; i++) {
-          experienceList.add(new ExperienceClass(
-              response.data[i]['title'], response.data[i]['desc']));
-        }
-      });
-      print(experienceList.length);
+    supabase.auth.onAuthStateChange((event, session) {
+      if (event.toString() == "AuthChangeEvent.signedIn" ||
+          event.toString() == "AuthChangeEvent.signedUp") {
+        setState(() {
+          signedin = true;
+        });
+        getExperiences();
+        print("authentification complete");
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    print(isloggedin());
-    if (!isloggedin()) {
+    if (!signedin) {
       return Container(
         child: Center(
           child: Column(
@@ -73,7 +85,7 @@ class _experienceState extends State<experience> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Login()),
+                      MaterialPageRoute(builder: (context) => Signup()),
                     );
                   }),
             ],
@@ -87,30 +99,25 @@ class _experienceState extends State<experience> {
           padding: const EdgeInsets.all(8.0),
           child: Text("Experiences", style: title, textAlign: TextAlign.start),
         ),
-        SizedBox(
-          height: 400,
+        Expanded(
           child: ListView.builder(
               itemCount: experienceList.length,
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8.0),
               itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    child: Column(
-                      children: [
-                        Text(
-                          experienceList[index].title,
-                          style: text,
-                          textAlign: TextAlign.left,
-                        ),
-                        Text(
-                          experienceList[index].description,
-                          style: text,
-                          textAlign: TextAlign.start,
-                        ),
-                      ],
-                    ),
-                    decoration: boxdeco,
+                return Container(
+                  child: Column(
+                    children: [
+                      Text(
+                        experienceList[index].title,
+                        style: text,
+                        textAlign: TextAlign.left,
+                      ),
+                      Text(
+                        experienceList[index].description,
+                        style: text,
+                        textAlign: TextAlign.start,
+                      ),
+                    ],
                   ),
                 );
               }),
@@ -195,7 +202,7 @@ class _newExperienceState extends State<newExperience> {
                         onPressed: () {
                           saveExperience(title, desc)
                               .then((value) => print(value.data));
-                          MaterialPageRoute(builder: (context) => experience());
+                          Navigator.pop(context);
                         },
                         child: const Icon(Icons.save),
                         backgroundColor: Colors.lightBlue,

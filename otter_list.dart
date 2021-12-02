@@ -170,11 +170,12 @@ class _OtterListState extends State<OtterList> {
   }
 
   void getData() async {
+    /*
     final res = await supabase.from('otters').select().execute();
     var data = (res.toJson());
     data.forEach((key, value) {
       print(value);
     });
-    final error = res.error;
+    final error = res.error;*/
   }
 }
