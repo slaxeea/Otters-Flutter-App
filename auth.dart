@@ -24,7 +24,6 @@ class _LoginState extends State<Login> {
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
         children: [
-          const Text('Sign in'),
           const SizedBox(height: 18),
           TextFormField(
             decoration: const InputDecoration(labelText: 'Email'),
@@ -76,7 +75,6 @@ class _SignupState extends State<Signup> {
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
         children: [
-          const Text('Sign Up'),
           const SizedBox(height: 18),
           TextFormField(
             decoration: const InputDecoration(labelText: 'Email'),

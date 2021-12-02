@@ -10,4 +10,4 @@ BoxDecoration boxdeco = BoxDecoration(
 
 TextStyle title = TextStyle(fontSize: 20);
 
-TextStyle text = TextStyle(fontSize: 15, );
+TextStyle text = TextStyle(fontSize: 15, color: Colors.black);
