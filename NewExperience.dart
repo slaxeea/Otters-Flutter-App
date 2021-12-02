@@ -89,11 +89,49 @@ class _newExperienceState extends State<newExperience> {
 class ExperienceDetail extends StatelessWidget {
   final ExperienceClass exp;
   ExperienceDetail(this.exp);
+  Future<void> delete(ExperienceClass e) async {
+    final res = await supabase
+        .from('experiences')
+        .delete()
+        .match({'id': e.id.toString()}).execute();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text(exp.title, style: text,),
+    String title = exp.title;
+    String desc = exp.description;
+    return Scaffold(
+      appBar: AppBar(title: Text("Details")),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Text("Title $title",
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .headline6
+                    ?.copyWith(color: Colors.black)),
+            Text("Description $desc",
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .subtitle1
+                    ?.copyWith(color: Colors.black)),
+            Container(
+              child: FloatingActionButton(
+                onPressed: () {
+                  delete(exp);
+                  Navigator.pop(context);
+                },
+                child: const Icon(Icons.delete),
+                backgroundColor: Colors.lightBlue,
+                tooltip: "Delete",
+              ),
+              alignment: Alignment.bottomRight,
+              padding: const EdgeInsets.only(right: 20),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

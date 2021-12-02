@@ -31,8 +31,8 @@ class _experienceState extends State<experience> {
       final data = response.data;
       List<ExperienceClass> temp = [];
       for (var i = 0; i < response.data.length; i++) {
-        temp.add(new ExperienceClass(
-            response.data[i]['title'], response.data[i]['desc']));
+        temp.add(new ExperienceClass(response.data[i]['title'],
+            response.data[i]['desc'], response.data[i]['id'].toString()));
       }
       setState(() {
         experienceList = temp;
@@ -97,68 +97,66 @@ class _experienceState extends State<experience> {
         ),
       );
     } else {
-      return Container(
+      return RefreshIndicator(
+          onRefresh: getExperiences,
           child: Column(children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text("Experiences", style: title, textAlign: TextAlign.start),
-        ),
-        Expanded(
-          child: ListView.builder(
-              itemCount: experienceList.length,
-              padding: const EdgeInsets.all(8.0),
-              itemBuilder: (BuildContext context, int index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) =>
-                                ExperienceDetail(experienceList[index])));
-                  },
-                  child: Container(
-                    margin: EdgeInsets.all(8.0),
-                    decoration: boxdeco,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Column(
-                          children: [
-                            Text(
-                              experienceList[index].title,
-                              style: text,
-                              textAlign: TextAlign.left,
+            Expanded(
+              child: ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: experienceList.length,
+                  padding: const EdgeInsets.all(8.0),
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) =>
+                                    ExperienceDetail(experienceList[index])));
+                      },
+                      child: Container(
+                        margin: EdgeInsets.all(8.0),
+                        decoration: boxdeco,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Column(
+                              children: [
+                                Text(
+                                  experienceList[index].title,
+                                  style: text,
+                                  textAlign: TextAlign.left,
+                                ),
+                                Text(
+                                  experienceList[index].description,
+                                  style: text,
+                                  textAlign: TextAlign.start,
+                                ),
+                              ],
                             ),
-                            Text(
-                              experienceList[index].description,
-                              style: text,
-                              textAlign: TextAlign.start,
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                );
-              }),
-        ),
-        Container(
-          child: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => (newExperience())),
-              );
-            },
-            child: const Icon(Icons.add),
-            backgroundColor: Colors.lightBlue,
-            tooltip: "New",
-          ),
-          alignment: Alignment.bottomRight,
-          padding: const EdgeInsets.only(right: 20),
-        ),
-      ]));
+                    );
+                  }),
+            ),
+            Container(
+              child: FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => (newExperience())),
+                  );
+                },
+                child: const Icon(Icons.add),
+                backgroundColor: Colors.lightBlue,
+                tooltip: "New",
+              ),
+              alignment: Alignment.bottomRight,
+              padding: const EdgeInsets.only(right: 20),
+            ),
+          ]));
     }
   }
 }

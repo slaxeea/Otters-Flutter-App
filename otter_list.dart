@@ -98,10 +98,10 @@ class _OtterListState extends State<OtterList> {
     if (query != null && query != "") {
       try {
         otters.forEach((element) {
-          if (element.common == query ||
-              element.name == query ||
-              element.common.contains(query) ||
-              element.name.contains(query)) {
+          if (element.common.toLowerCase() == query.toLowerCase() ||
+              element.name.toLowerCase() == query.toLowerCase() ||
+              element.common.toLowerCase().contains(query.toLowerCase()) ||
+              element.name.toLowerCase().contains(query.toLowerCase())) {
             filteredOtters.add(element);
           }
         });

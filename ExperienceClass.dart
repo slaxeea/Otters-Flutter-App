@@ -1,5 +1,6 @@
 class ExperienceClass {
   String title;
   String description;
-  ExperienceClass(this.title, this.description);
+  String id;
+  ExperienceClass(this.title, this.description, this.id);
 }
