@@ -28,7 +28,6 @@ class _newExperienceState extends State<newExperience> {
     return response;
   }
 
-
   @override
   Widget build(BuildContext context) {
     Future imageSelector(BuildContext context, String pickerType) async {
@@ -36,12 +35,11 @@ class _newExperienceState extends State<newExperience> {
       switch (pickerType) {
         case "gallery":
 
-          /// GALLERY IMAGE PICKER
           imageFile = (await img.pickImage(
               source: ImageSource.gallery, imageQuality: 90));
           break;
 
-        case "camera": // CAMERA CAPTURE CODE
+        case "camera": 
           imageFile = (await img.pickImage(
               source: ImageSource.camera, imageQuality: 90));
           break;
@@ -56,13 +54,13 @@ class _newExperienceState extends State<newExperience> {
 
         final res = await supabase.storage.from('images').upload(path, file,
             fileOptions: FileOptions(cacheControl: '3600', upsert: false));
-        
+
         String pathInDb =
             "https://eoshhzqqdhzcowuvurqc.supabase.in/storage/v1/object/public/images/" +
                 getUserId() +
                 "/" +
                 rand;
-                print("path: $pathInDb");
+        print("path: $pathInDb");
         setState(() {
           imageUrl = pathInDb;
         });
@@ -134,6 +132,15 @@ class _newExperienceState extends State<newExperience> {
                             labelText: "Description",
                           )),
                     ),
+                    (imageUrl == ""
+                        ? Text(" ")
+                        : Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.file(
+                              File(imageFile.path),
+                              height: 300,
+                            ),
+                          )),
                     ElevatedButton(
                         child: Text('Add Photo'),
                         onPressed: () {

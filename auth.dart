@@ -8,6 +8,7 @@ import 'styles.dart';
 import 'main.dart';
 import 'experience.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   Login({Key key}) : super(key: key);
@@ -20,6 +21,16 @@ class _LoginState extends State<Login> {
   String mail;
   String password;
   String error = "";
+  String storedMail;
+
+  getStoredMail() async { 
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String _res = prefs.getString("email");
+    setState(() {
+      storedMail = _res;
+      mail = storedMail;
+    });
+  }
 
   FutureOr<void> onError(err) {
     setState(() {
@@ -29,6 +40,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    getStoredMail();
     return Scaffold(
       appBar: AppBar(title: const Text('Login')),
       body: ListView(
@@ -37,6 +49,8 @@ class _LoginState extends State<Login> {
           const SizedBox(height: 18),
           TextFormField(
             decoration: const InputDecoration(labelText: 'Email'),
+            initialValue: storedMail,
+            key: Key(storedMail),
             onChanged: (String value) {
               mail = value;
             },
@@ -63,6 +77,7 @@ class _LoginState extends State<Login> {
                       error = (response.error.message);
                     });
                   } else {
+                    setStoredMail(mail);
                     Navigator.pop(context,
                         MaterialPageRoute(builder: (context) => experience()));
                   }
@@ -120,6 +135,7 @@ class _SignupState extends State<Signup> {
                       error = (response.error.message);
                     });
                   } else {
+                    setStoredMail(mail);
                     Navigator.pop(context,
                         MaterialPageRoute(builder: (context) => experience()));
                   }
@@ -146,4 +162,9 @@ Widget errorWidget(String error) {
 
 String getUserId() {
   return supabase.auth.currentUser.id;
+}
+
+void setStoredMail(String mail) async {
+  final prefs = await SharedPreferences.getInstance();
+  prefs.setString("email", mail);
 }
