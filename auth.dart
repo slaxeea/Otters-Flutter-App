@@ -23,12 +23,12 @@ class _LoginState extends State<Login> {
   String error = "";
   String storedMail;
 
-  getStoredMail() async { 
+  getStoredMail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String _res = prefs.getString("email");
     setState(() {
       storedMail = _res;
-      mail = storedMail;
+      storedMail != null ? mail = storedMail : mail = mail;
     });
   }
 

@@ -34,12 +34,11 @@ class _newExperienceState extends State<newExperience> {
       ImagePicker img = new ImagePicker();
       switch (pickerType) {
         case "gallery":
-
           imageFile = (await img.pickImage(
               source: ImageSource.gallery, imageQuality: 90));
           break;
 
-        case "camera": 
+        case "camera":
           imageFile = (await img.pickImage(
               source: ImageSource.camera, imageQuality: 90));
           break;
@@ -141,11 +140,13 @@ class _newExperienceState extends State<newExperience> {
                               height: 300,
                             ),
                           )),
-                    ElevatedButton(
-                        child: Text('Add Photo'),
-                        onPressed: () {
-                          _settingModalBottomSheet(context);
-                        }),
+                    (imageFile == null
+                        ? ElevatedButton(
+                            child: Text('Add Photo'),
+                            onPressed: () {
+                              _settingModalBottomSheet(context);
+                            })
+                        : Text(" ")),
                     Container(
                       child: FloatingActionButton(
                         onPressed: () {
