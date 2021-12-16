@@ -22,6 +22,7 @@ class _LoginState extends State<Login> {
   String password;
   String error = "";
   String storedMail;
+  bool saveData = false;
 
   getStoredMail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -64,6 +65,21 @@ class _LoginState extends State<Login> {
               password = value;
             },
           ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Checkbox(
+                checkColor: Colors.white,
+                value: saveData,
+                onChanged: (bool value) {
+                  setState(() {
+                    saveData = value;
+                  });
+                },
+              ),
+              Text("Save email for later"),
+            ]),
+          ),
           errorWidget(this.error),
           const SizedBox(height: 18),
           ElevatedButton(
@@ -77,7 +93,9 @@ class _LoginState extends State<Login> {
                       error = (response.error.message);
                     });
                   } else {
-                    setStoredMail(mail);
+                    if (saveData) {
+                      setStoredMail(mail);
+                    }
                     Navigator.pop(context,
                         MaterialPageRoute(builder: (context) => experience()));
                   }
@@ -100,6 +118,7 @@ class _SignupState extends State<Signup> {
   String mail;
   String password;
   String error;
+  bool saveData = false;
 
   @override
   Widget build(BuildContext context) {
@@ -124,6 +143,21 @@ class _SignupState extends State<Signup> {
               password = value;
             },
           ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Checkbox(
+                checkColor: Colors.white,
+                value: saveData,
+                onChanged: (bool value) {
+                  setState(() {
+                    saveData = value;
+                  });
+                },
+              ),
+              Text("Save email for later"),
+            ]),
+          ),
           errorWidget(this.error),
           const SizedBox(height: 18),
           ElevatedButton(
@@ -135,7 +169,9 @@ class _SignupState extends State<Signup> {
                       error = (response.error.message);
                     });
                   } else {
-                    setStoredMail(mail);
+                    if (saveData) {
+                      setStoredMail(mail);
+                    }
                     Navigator.pop(context,
                         MaterialPageRoute(builder: (context) => experience()));
                   }
