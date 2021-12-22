@@ -88,21 +88,32 @@ class _LoginState extends State<Login> {
           ElevatedButton(
               child: Text('Login'),
               onPressed: () {
-                supabase.auth
-                    .signIn(email: mail, password: password)
-                    .then((response) {
-                  if ((response.error) != null) {
-                    setState(() {
-                      error = (response.error.message);
-                    });
-                  } else {
-                    if (saveData) {
-                      setStoredMail(mail);
+                if (mail != null &&
+                    mail.isNotEmpty &&
+                    password != null &&
+                    password.isNotEmpty) {
+                  supabase.auth
+                      .signIn(email: mail, password: password)
+                      .then((response) {
+                    if ((response.error) != null) {
+                      setState(() {
+                        error = (response.error.message);
+                      });
+                    } else {
+                      if (saveData) {
+                        setStoredMail(mail);
+                      }
+                      Navigator.pop(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => experience()));
                     }
-                    Navigator.pop(context,
-                        MaterialPageRoute(builder: (context) => experience()));
-                  }
-                });
+                  });
+                } else {
+                  error = (mail == null)
+                      ? "Please enter a mail adress"
+                      : "Please enter a password";
+                }
               }),
         ],
       ),
@@ -169,19 +180,30 @@ class _SignupState extends State<Signup> {
           ElevatedButton(
               child: Text('Sign Up'),
               onPressed: () {
-                supabase.auth.signUp(mail, password).then((response) {
-                  if ((response.error) != null) {
-                    setState(() {
-                      error = (response.error.message);
-                    });
-                  } else {
-                    if (saveData) {
-                      setStoredMail(mail);
+                if (mail != null &&
+                    mail.isNotEmpty &&
+                    password != null &&
+                    password.isNotEmpty) {
+                  supabase.auth.signUp(mail, password).then((response) {
+                    if ((response.error) != null) {
+                      setState(() {
+                        error = (response.error.message);
+                      });
+                    } else {
+                      if (saveData) {
+                        setStoredMail(mail);
+                      }
+                      Navigator.pop(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => experience()));
                     }
-                    Navigator.pop(context,
-                        MaterialPageRoute(builder: (context) => experience()));
-                  }
-                });
+                  });
+                } else {
+                  error = (mail == null)
+                      ? "Please enter a mail adress"
+                      : "Please enter a password";
+                }
               }),
         ],
       ),

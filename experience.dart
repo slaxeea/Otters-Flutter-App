@@ -132,36 +132,32 @@ class _experienceState extends State<experience> {
                         decoration: boxdeco,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Row(
-                              children: [
-                                experienceList[index].imageUrl == null
-                                    ? Text("")
-                                    : Image.network(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                experienceList[index].title,
+                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.start,
+                              ),
+                              experienceList[index].imageUrl == null
+                                  ? Text("")
+                                  : Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Image.network(
                                         experienceList[index].imageUrl,
                                         height: 180,
                                       ),
-                                Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        "Title: " + experienceList[index].title,
-                                        style: text,
-                                        textAlign: TextAlign.left,
-                                      ),
-                                      Text(
-                                        "Description: " +
-                                            experienceList[index].description,
-                                        style: text,
-                                        textAlign: TextAlign.start,
-                                      ),
-                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
+                                    
+                              
+                              Text(
+                                experienceList[index].description,
+                                style: text,
+                                textAlign: TextAlign.start,
+                              ),
+                            ],
                           ),
                         ),
                       ),
