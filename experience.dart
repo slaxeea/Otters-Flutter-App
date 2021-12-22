@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:otter_library/otter_list.dart';
 import 'package:otter_library/NewExperience.dart';
 import 'ExperienceClass.dart';
 import 'ExperienceDetail.dart';

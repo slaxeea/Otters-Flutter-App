@@ -21,7 +21,6 @@ class _OtterListState extends State<OtterList> {
         this.otters = otters;
       });
     });
-    var data = getData();
   }
 
   int _selectedIndex = 1;
@@ -38,13 +37,15 @@ class _OtterListState extends State<OtterList> {
     final List _widgetOptions = [
       experience(),
       (otters == null ? buildWaitingWidget() : buildOtterWidget()),
-      (Column(children: <Widget>[
+      (Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
             'Search for an otter',
             style: TextStyle(fontSize: 20),
-            textAlign: TextAlign.left,
           ),
         ),
         Padding(
@@ -52,7 +53,7 @@ class _OtterListState extends State<OtterList> {
           child: TextField(
             decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'otter name, species name'),
+                hintText: 'otter name or species name'),
             onChanged: (String value) {
               setState(() {
                 searchedQuery = value;
@@ -121,13 +122,28 @@ class _OtterListState extends State<OtterList> {
                             image: Image.network(filteredOtters[index].imageUrl)
                                 .image,
                             width: 200),
-                        Text(
-                          filteredOtters[index].common,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                filteredOtters[index].common,
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.start,
+                              ),
+                              Text(
+                                filteredOtters[index].desc,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                ),
+                                textAlign: TextAlign.start,
+                              ),
+                            ],
                           ),
-                          textAlign: TextAlign.start,
                         ),
                       ],
                     ),
@@ -167,15 +183,5 @@ class _OtterListState extends State<OtterList> {
   void toNextPage(Otter otter) {
     Navigator.push(
         context, MaterialPageRoute(builder: (_) => OtterPage(otter)));
-  }
-
-  void getData() async {
-    /*
-    final res = await supabase.from('otters').select().execute();
-    var data = (res.toJson());
-    data.forEach((key, value) {
-      print(value);
-    });
-    final error = res.error;*/
   }
 }
