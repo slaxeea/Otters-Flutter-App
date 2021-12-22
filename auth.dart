@@ -91,7 +91,9 @@ class _LoginState extends State<Login> {
                 if (mail != null &&
                     mail.isNotEmpty &&
                     password != null &&
-                    password.isNotEmpty) {
+                    password.isNotEmpty &&
+                    RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                        .hasMatch(mail)) {
                   supabase.auth
                       .signIn(email: mail, password: password)
                       .then((response) {
@@ -110,9 +112,11 @@ class _LoginState extends State<Login> {
                     }
                   });
                 } else {
-                  error = (mail == null)
+                  error = (mail == null || mail.isEmpty)
                       ? "Please enter a mail adress"
-                      : "Please enter a password";
+                      : (password == null || password.isEmpty)
+                          ? "Please enter a password"
+                          : "Please enter valid credentials";
                 }
               }),
         ],
@@ -200,9 +204,11 @@ class _SignupState extends State<Signup> {
                     }
                   });
                 } else {
-                  error = (mail == null)
+                  error = (mail == null || mail.isEmpty)
                       ? "Please enter a mail adress"
-                      : "Please enter a password";
+                      : (password == null || password.isEmpty)
+                          ? "Please enter a password"
+                          : "Please enter valid credentials";
                 }
               }),
         ],

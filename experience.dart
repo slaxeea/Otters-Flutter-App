@@ -138,20 +138,19 @@ class _experienceState extends State<experience> {
                             children: [
                               Text(
                                 experienceList[index].title,
-                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
                                 textAlign: TextAlign.start,
                               ),
                               experienceList[index].imageUrl == null
                                   ? Text("")
                                   : Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Image.network(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Image.network(
                                         experienceList[index].imageUrl,
                                         height: 180,
                                       ),
-                                  ),
-                                    
-                              
+                                    ),
                               Text(
                                 experienceList[index].description,
                                 style: text,
