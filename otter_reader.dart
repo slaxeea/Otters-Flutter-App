@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'otter.dart';
+
+import 'package:http/http.dart' as http;
 
 class OtterReader {
   Future<List<Otter>> read(String fileName) async {
