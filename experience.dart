@@ -134,17 +134,31 @@ class _experienceState extends State<experience> {
                           padding: const EdgeInsets.all(8.0),
                           child: Align(
                             alignment: Alignment.topLeft,
-                            child: Column(
+                            child: Row(
                               children: [
-                                Text(
-                                  experienceList[index].title,
-                                  style: text,
-                                  textAlign: TextAlign.left,
-                                ),
-                                Text(
-                                  experienceList[index].description,
-                                  style: text,
-                                  textAlign: TextAlign.start,
+                                experienceList[index].imageUrl == null
+                                    ? Text("")
+                                    : Image.network(
+                                        experienceList[index].imageUrl,
+                                        height: 180,
+                                      ),
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "Title: " + experienceList[index].title,
+                                        style: text,
+                                        textAlign: TextAlign.left,
+                                      ),
+                                      Text(
+                                        "Description: " +
+                                            experienceList[index].description,
+                                        style: text,
+                                        textAlign: TextAlign.start,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),

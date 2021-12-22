@@ -67,18 +67,21 @@ class _LoginState extends State<Login> {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Checkbox(
-                checkColor: Colors.white,
-                value: saveData,
-                onChanged: (bool value) {
-                  setState(() {
-                    saveData = value;
-                  });
-                },
-              ),
-              Text("Save email for later"),
-            ]),
+            child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Checkbox(
+                    checkColor: Colors.white,
+                    value: saveData,
+                    onChanged: (bool value) {
+                      setState(() {
+                        saveData = value;
+                      });
+                    },
+                  ),
+                  Text("Save email for later"),
+                ]),
           ),
           errorWidget(this.error),
           const SizedBox(height: 18),
@@ -145,18 +148,21 @@ class _SignupState extends State<Signup> {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Checkbox(
-                checkColor: Colors.white,
-                value: saveData,
-                onChanged: (bool value) {
-                  setState(() {
-                    saveData = value;
-                  });
-                },
-              ),
-              Text("Save email for later"),
-            ]),
+            child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Checkbox(
+                    checkColor: Colors.white,
+                    value: saveData,
+                    onChanged: (bool value) {
+                      setState(() {
+                        saveData = value;
+                      });
+                    },
+                  ),
+                  Text("Save email for later"),
+                ]),
           ),
           errorWidget(this.error),
           const SizedBox(height: 18),
