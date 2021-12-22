@@ -38,35 +38,35 @@ class _OtterListState extends State<OtterList> {
       experience(),
       (otters == null ? buildWaitingWidget() : buildOtterWidget()),
       (Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            'Search for an otter',
-            style: TextStyle(fontSize: 20),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'otter name or species name'),
-            onChanged: (String value) {
-              setState(() {
-                searchedQuery = value;
-              });
-            },
-          ),
-        ),
-        Container(
-          height: 400,
-          width: 500,
-          child: searchResultWidget(searchedQuery),
-        ),
-      ])),
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Search for an otter',
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'otter name or species name'),
+                onChanged: (String value) {
+                  setState(() {
+                    searchedQuery = value;
+                  });
+                },
+              ),
+            ),
+            Container(
+              height: 400,
+              width: 500,
+              child: searchResultWidget(searchedQuery),
+            ),
+          ])),
     ];
 
     return Scaffold(
@@ -123,26 +123,29 @@ class _OtterListState extends State<OtterList> {
                                 .image,
                             width: 200),
                         Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                filteredOtters[index].common,
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  filteredOtters[index].common,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.start,
                                 ),
-                                textAlign: TextAlign.start,
-                              ),
-                              Text(
-                                filteredOtters[index].desc,
-                                style: TextStyle(
-                                  fontSize: 12,
+                                Text(
+                                  filteredOtters[index].desc,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                  ),
+                                  textAlign: TextAlign.start,
                                 ),
-                                textAlign: TextAlign.start,
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ],
