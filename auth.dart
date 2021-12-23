@@ -1,13 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:otter_library/otter_list.dart';
-import 'ExperienceClass.dart';
 import 'styles.dart';
 import 'main.dart';
 import 'experience.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Login widget

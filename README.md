@@ -12,4 +12,5 @@ Only ever built for Android, since I don't own an Apple Device.
 The code is a heavily modified version of a project I did for a one-day course on mobile apps.
 
 Feel free to download the apk if you want:
-<https://bbbaden-my.sharepoint.com/personal/s_kappeler_inf19_stud_bbbaden_ch/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fs%5Fkappeler%5Finf19%5Fstud%5Fbbbaden%5Fch%2FDocuments%2FLB%2D335>
+<
+https://bbbaden-my.sharepoint.com/:f:/g/personal/s_kappeler_inf19_stud_bbbaden_ch/Ev6FcF_jHhpNttnXVZXudpAB7KVdccyp8k1cR5fmP0FbhA>

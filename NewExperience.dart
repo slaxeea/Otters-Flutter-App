@@ -46,8 +46,6 @@ class _newExperienceState extends State<newExperience> {
       }
 
       if (imageFile != null) {
-        print("You selected  image : " + imageFile.path);
-
         // Upload the file to the database
         final dynamic file = File(imageFile.path);
         // Save the file with a random number (this is not a good method haha)
@@ -156,7 +154,7 @@ class _newExperienceState extends State<newExperience> {
                         onPressed: () {
                           // Write the experience to the database
                           saveExperience(title, desc, imageUrl);
-                          
+
                           // Return to the previous widget
                           Navigator.pop(context);
                         },
