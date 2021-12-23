@@ -11,11 +11,13 @@ class OtterReader {
     return parse(content);
   }
 
+  // json array to list
   List<Otter> parse(String s) {
     List res = json.decode(s);
     return res.map(parseOtter).toList();
   }
 
+  // take some json properties and return an otter object from it
   Otter parseOtter(properties) {
     String name = properties["name"];
     String common = properties["common"];

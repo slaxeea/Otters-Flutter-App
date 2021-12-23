@@ -1,5 +1,5 @@
 # Otter-Mobile
- 
+
 Hey!
 
 This is an app I've made to try out the Flutter framework.
@@ -9,13 +9,7 @@ This repo only has the source code in it, not the Flutter project, so if you wou
 
 Only ever built for Android, since I don't own an Apple Device.
 
-The code is a modified version of a project I did for a one-day course on mobile apps.
-It was about an app that displayed a list of recipes, which you could look up the ingredients for.
+The code is a heavily modified version of a project I did for a one-day course on mobile apps.
 
-So what I did was:
-- Copy the .JSON from the Otter-Website repo and modify it, so that the otters are in an array instead of an object
-- Change the file-reader class to read the new properties of an otter instead of a recipe
-- Modify the way objects are rendered, since you cannot render a otter the same way as a recipe :) 
-- Deleted the recipe class and changed it for a otter class (makes sense, right?)
-- Download the favicon and make it readable as an app-icon for android devices
-- Other stuff I've forgotten
+Feel free to download the apk if you want:
+<https://bbbaden-my.sharepoint.com/personal/s_kappeler_inf19_stud_bbbaden_ch/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fs%5Fkappeler%5Finf19%5Fstud%5Fbbbaden%5Fch%2FDocuments%2FLB%2D335>

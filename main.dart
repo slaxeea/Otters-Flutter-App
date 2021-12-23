@@ -12,7 +12,10 @@ Future<void> main() async {
 var url = 'https://eoshhzqqdhzcowuvurqc.supabase.co';
 var anonKey =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYzODI1NzExMCwiZXhwIjoxOTUzODMzMTEwfQ.rl0jjh5VOWvIYNBFg-UBbrhTAOwJ_JFfSjrsEtUjDNM';
+// Initialize the supabase client
 final SupabaseClient supabase = SupabaseClient(url, anonKey);
+// Getter for the other files, easiest solution to avoid multiple
+// instances of supabase
 SupabaseClient getSupabase() => supabase;
 
 class MyApp extends StatelessWidget {
@@ -25,6 +28,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// Otter Detail Page
 class OtterPage extends StatelessWidget {
   final Otter otter;
   OtterPage(this.otter);
@@ -53,16 +57,17 @@ class OtterPage extends StatelessWidget {
                             ?.copyWith(color: Colors.black)),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
+                      // Link to the wikipedia
                       child: InkWell(
                           child: Text('Open Wikipedia',
                               style: Theme.of(context)
                                   .primaryTextTheme
                                   .subtitle1
                                   ?.copyWith(
-                                    color: Colors.black,
-                                    decoration: TextDecoration.underline,
-                                    decorationColor: Colors.blueGrey
-                                  )),
+                                      color: Colors.black,
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: Colors.blueGrey)),
+                          // Open the link in a browser
                           onTap: () => launch(otter.link)),
                     ),
                   ],

@@ -16,6 +16,7 @@ class _OtterListState extends State<OtterList> {
   @override
   Future<void> initState() {
     super.initState();
+    // Read the otters from the file
     OtterReader().read("data/otters.json").then((otters) {
       setState(() {
         this.otters = otters;
@@ -23,6 +24,7 @@ class _OtterListState extends State<OtterList> {
     });
   }
 
+  // index of the selected widget
   int _selectedIndex = 1;
   String searchedQuery = "";
 
@@ -34,9 +36,15 @@ class _OtterListState extends State<OtterList> {
       });
     }
 
+    // The three widgets that can be selected by the navbar
     final List _widgetOptions = [
+      // experience tab
       experience(),
+
+      // Otter List tab
       (otters == null ? buildWaitingWidget() : buildOtterWidget()),
+
+      // Search widget tab
       (Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,6 +59,7 @@ class _OtterListState extends State<OtterList> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
+                key: Key("searchinput"),
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'otter name or species name'),
@@ -69,6 +78,7 @@ class _OtterListState extends State<OtterList> {
           ])),
     ];
 
+    // Body with the navbar and icons
     return Scaffold(
       appBar: AppBar(title: Text("Otter-Library")),
       body: _widgetOptions.elementAt(_selectedIndex),
@@ -95,6 +105,8 @@ class _OtterListState extends State<OtterList> {
     );
   }
 
+  // Find the otters that match the query
+  // and return a widget wit all of them
   Widget searchResultWidget(String query) {
     List<Otter> filteredOtters = [];
     if (query != null && query != "") {
@@ -158,7 +170,6 @@ class _OtterListState extends State<OtterList> {
               );
             });
       } catch (e) {
-        print(e);
         return (Text("No otter found"));
       }
     } else {
@@ -184,6 +195,8 @@ class _OtterListState extends State<OtterList> {
         });
   }
 
+  // Navigate the user to the otter details
+  // after he clicked on the tile
   void toNextPage(Otter otter) {
     Navigator.push(
         context, MaterialPageRoute(builder: (_) => OtterPage(otter)));

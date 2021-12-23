@@ -7,6 +7,7 @@ class ExperienceDetail extends StatelessWidget {
   final ExperienceClass exp;
   ExperienceDetail(this.exp);
 
+  // Remove the row from the database
   Future<void> delete(ExperienceClass e) async {
     final res = await supabase
         .from('experiences')
@@ -26,6 +27,7 @@ class ExperienceDetail extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
+            // Only display in image if a url is given
             (imageUrl == "" || imageUrl == "null" || imageUrl == null
                 ? Text(" ")
                 : SizedBox(
@@ -46,6 +48,7 @@ class ExperienceDetail extends StatelessWidget {
               child: FloatingActionButton(
                 onPressed: () {
                   delete(exp);
+                  // Return to the previous widget
                   Navigator.pop(context);
                 },
                 child: const Icon(Icons.delete),

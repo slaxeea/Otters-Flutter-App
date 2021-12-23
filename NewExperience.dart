@@ -19,6 +19,7 @@ class _newExperienceState extends State<newExperience> {
   String desc = "";
   String imageUrl = "";
 
+  // Save the experience to the database
   Future<PostgrestResponse> saveExperience(
       String title, String desc, String imageUrl) async {
     String id = supabase.auth.currentUser.id;
@@ -47,7 +48,9 @@ class _newExperienceState extends State<newExperience> {
       if (imageFile != null) {
         print("You selected  image : " + imageFile.path);
 
+        // Upload the file to the database
         final dynamic file = File(imageFile.path);
+        // Save the file with a random number (this is not a good method haha)
         String rand = Random().nextInt(1000000).toString();
         String path = getUserId() + "/" + rand;
 
@@ -59,15 +62,16 @@ class _newExperienceState extends State<newExperience> {
                 getUserId() +
                 "/" +
                 rand;
-        print("path: $pathInDb");
+
+        // Save the path for the image to the experience table
         setState(() {
           imageUrl = pathInDb;
         });
-      } else {
-        print("You have not taken an image");
       }
     }
 
+    // Display the option for the user to take a photo or
+    // select one from their phone
     void _settingModalBottomSheet(context) {
       showModalBottomSheet(
           context: context,
@@ -150,8 +154,10 @@ class _newExperienceState extends State<newExperience> {
                     Container(
                       child: FloatingActionButton(
                         onPressed: () {
-                          saveExperience(title, desc, imageUrl)
-                              .then((value) => print(value.data));
+                          // Write the experience to the database
+                          saveExperience(title, desc, imageUrl);
+                          
+                          // Return to the previous widget
                           Navigator.pop(context);
                         },
                         child: const Icon(Icons.save),

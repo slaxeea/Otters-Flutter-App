@@ -67,6 +67,8 @@ class _experienceState extends State<experience> {
 
   @override
   Widget build(BuildContext context) {
+    // Display the login and signup buttons
+    // if the user is not authenticated
     if (!signedin) {
       return Container(
         child: Center(
@@ -81,6 +83,7 @@ class _experienceState extends State<experience> {
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: ElevatedButton(
+                    key: Key("tologinbtn"),
                     child: Text('Login'),
                     onPressed: () {
                       Navigator.push(
@@ -121,6 +124,7 @@ class _experienceState extends State<experience> {
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                       onTap: () {
+                        // Open the detailed page for the experience
                         Navigator.push(
                             context,
                             MaterialPageRoute(

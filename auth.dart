@@ -10,6 +10,7 @@ import 'experience.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// Login widget
 class Login extends StatefulWidget {
   Login({Key key}) : super(key: key);
 
@@ -24,18 +25,13 @@ class _LoginState extends State<Login> {
   String storedMail;
   bool saveData = false;
 
+  // get mail if one was saved in the shared preferences
   getStoredMail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String _res = prefs.getString("email");
     setState(() {
       storedMail = _res;
       storedMail != null ? mail = storedMail : mail = mail;
-    });
-  }
-
-  FutureOr<void> onError(err) {
-    setState(() {
-      error = err;
     });
   }
 
@@ -51,7 +47,7 @@ class _LoginState extends State<Login> {
           TextFormField(
             decoration: const InputDecoration(labelText: 'Email'),
             initialValue: storedMail,
-            key: Key(storedMail),
+            key: Key("mailinput"),
             onChanged: (String value) {
               mail = value;
             },
@@ -60,6 +56,7 @@ class _LoginState extends State<Login> {
             obscureText: true,
             enableSuggestions: false,
             autocorrect: false,
+            key: Key("pwinput"),
             decoration: const InputDecoration(labelText: 'Password'),
             onChanged: (String value) {
               password = value;
@@ -86,12 +83,14 @@ class _LoginState extends State<Login> {
           errorWidget(this.error),
           const SizedBox(height: 18),
           ElevatedButton(
+            key: Key("loginbtn"),
               child: Text('Login'),
               onPressed: () {
                 if (mail != null &&
                     mail.isNotEmpty &&
                     password != null &&
                     password.isNotEmpty &&
+                    // check if mail is valid
                     RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                         .hasMatch(mail)) {
                   supabase.auth
@@ -105,6 +104,7 @@ class _LoginState extends State<Login> {
                       if (saveData) {
                         setStoredMail(mail);
                       }
+                      // return the user to the experiences tab
                       Navigator.pop(
                           context,
                           MaterialPageRoute(
@@ -125,6 +125,7 @@ class _LoginState extends State<Login> {
   }
 }
 
+// Signup widget
 class Signup extends StatefulWidget {
   Signup({Key key}) : super(key: key);
 
@@ -234,6 +235,7 @@ String getUserId() {
   return supabase.auth.currentUser.id;
 }
 
+// save the mail provided into the preferences
 void setStoredMail(String mail) async {
   final prefs = await SharedPreferences.getInstance();
   prefs.setString("email", mail);
