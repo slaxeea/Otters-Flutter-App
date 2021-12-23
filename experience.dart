@@ -20,6 +20,7 @@ class _experienceState extends State<experience> {
   List<ExperienceClass> experienceList = [];
   bool signedin = supabase.auth.currentUser != null;
 
+  // Get all the experiences of this user
   Future<PostgrestResponse> getExperiences() async {
     if (signedin) {
       experienceList.clear();
@@ -32,6 +33,7 @@ class _experienceState extends State<experience> {
       final data = response.data;
       List<ExperienceClass> temp = [];
       for (var i = 0; i < response.data.length; i++) {
+        // Convert the data to experienc objects
         temp.add(new ExperienceClass(
             response.data[i]['title'],
             response.data[i]['desc'],
@@ -60,7 +62,6 @@ class _experienceState extends State<experience> {
           signedin = true;
         });
         getExperiences();
-        print("authentification complete");
       }
     });
   }
